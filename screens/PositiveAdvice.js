@@ -88,7 +88,7 @@ const PositiveAdviceMain = ({ navigation }) => {
         },
         {
           headers: {
-            'Authorization': `Bearer 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`,
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
           },
         }
