@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
+import { API_KEY } from '@env';
 
 // Custom header component with a reset button for PreviousAdvice
 const CustomHeader = ({ navigation, showReset, onReset }) => {
@@ -88,7 +89,7 @@ const PositiveAdviceMain = ({ navigation }) => {
         },
         {
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${API_KEY}`,
             'Content-Type': 'application/json',
           },
         }

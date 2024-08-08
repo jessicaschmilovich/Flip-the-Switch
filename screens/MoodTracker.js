@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,8 +9,8 @@ const moods = [
   { name: 'Happy', color: '#ffc000' },
   { name: 'Excited', color: '#ffb3c6' },
   { name: 'Calm', color: 'green' },
+  { name: 'Neutral', color: '#a000c8' },
   { name: 'Anxious', color: '#ff7600' },
-  { name: 'Worried', color: 'purple' },
   { name: 'Angry', color: 'red' },
   { name: 'Sad', color: 'gray' },
   { name: 'Hopeless', color: '#333333' },
@@ -118,18 +118,20 @@ const WeeklySummaryScreen = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.header}>Weekly Mood Summary</Text>
       {sortedWeeklyData.length === 0 ? (
-        <Text style={styles.noDataText}></Text>
+        <Text style={styles.noDataText}>No data available</Text>
       ) : (
-        <View style={styles.moodContainer}>
-          {sortedWeeklyData.map((item, index) => (
-            <View key={index} style={styles.moodItem}>
+        <FlatList
+          data={sortedWeeklyData}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.moodItem}>
               <Text style={styles.dayText}>{item.day}:</Text>
               <View style={[styles.moodBox, { backgroundColor: item.color }]}>
                 <Text style={styles.moodText}>{item.mood}</Text>
               </View>
             </View>
-          ))}
-        </View>
+          )}
+        />
       )}
     </View>
   );
@@ -245,6 +247,7 @@ const styles = StyleSheet.create({
   moodBox: {
     padding: 10,
     borderRadius: 30,
+    alignItems: 'center', // Center the mood boxes
   },
   moodText: {
     color: '#fff',
