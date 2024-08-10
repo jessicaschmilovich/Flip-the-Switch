@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,6 +15,17 @@ const moods = [
   { name: 'Sad', color: 'gray' },
   { name: 'Hopeless', color: '#333333' },
 ];
+
+const moodEmojis = {
+  Happy: require('../assets/Happy Emoji.png'),
+  Excited: require('../assets/Excited Emoji.png'),
+  Calm: require('../assets/Calm Emoji.png'),
+  Neutral: require('../assets/Neutral Emoji.png'),
+  Anxious: require('../assets/Anxious Emoji.png'),
+  Angry: require('../assets/Angry Emoji.png'),
+  Sad: require('../assets/Sad Emoji.png'),
+  Hopeless: require('../assets/Hopeless Emoji.png'),
+};
 
 const HomeScreen = ({ navigation }) => {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -85,6 +96,9 @@ const ConfirmationScreen = ({ route, navigation }) => {
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBackButton}>
         <Ionicons name="arrow-back" size={24} color="#004aad" />
       </TouchableOpacity>
+      {moodEmojis[mood.name] && (
+        <Image source={moodEmojis[mood.name]} style={styles.emojiImage} />
+      )}
       <Text style={styles.confirmationText}>Mood Selected:</Text>
       <Text style={styles.selectedMoodText}>{mood.name}</Text>
     </View>
@@ -220,6 +234,13 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emojiImage: {
+    width: 375,
+    height: 300, 
+    marginBottom: 25,
+    marginTop: -50,
+    alignItems: 'center',
   },
   confirmationText: {
     fontSize: 24,

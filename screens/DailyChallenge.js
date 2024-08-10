@@ -356,6 +356,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
+    marginTop: -10,
     borderRadius: 5,
   },
   checkboxChecked: {
@@ -366,6 +367,8 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 16,
     color: '#004aad',
+    marginTop: 10,
+    marginBottom: -5,
   },
   CompletedButton: {
     width: '100%',
@@ -374,22 +377,25 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     marginVertical: 20,
-    marginBottom: 26,
+    marginBottom: 0,
   },
   CompletedButtonText: {
     color: 'white',
     fontSize: 18,
   },
   listContainer: {
-    padding: 20,
+    padding: 25,
   },
   challengeItem: {
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 30,
-    marginBottom: 10,
-    alignItems: 'center',
+    marginBottom: 30,
     marginTop: -20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '111%', 
+    alignSelf: 'center', 
   },
 });
 

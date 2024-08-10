@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as Speech from 'expo-speech';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
 import { API_KEY } from '@env';
@@ -112,6 +112,16 @@ const PositiveAdviceMain = ({ navigation }) => {
   const stopAdvice = () => {
     Speech.stop();
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // This will run when the screen is focused
+      return () => {
+        // This will run when the screen is unfocused or the component is destroyed
+        Speech.stop();
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -238,7 +248,7 @@ const PositiveAdviceStack = () => {
         headerStyle: {
           backgroundColor: '#7bbbef', // Set the background color of the header
           borderBottomColor: '#7bbbef', // Set the color of the bottom border
-          borderBottomWidth: 1, // Set the width of the bottom border if necessary
+          borderBottomWidth: 1, // Set the bottom border width if necessary
         },
         headerTintColor: '#004aad', // Set the color of the back arrow
         headerTitle: '', // No title
@@ -285,8 +295,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomColor: '#7bbbef', // Set the bottom border color
-    borderBottomWidth: 1, // Set the bottom border width
+    borderBottomColor: '#7bbbef', 
+    borderBottomWidth: 1, 
   },
   headerBackButton: {
     left: 10,
@@ -302,25 +312,25 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   seePreviousButton: {
-    backgroundColor: 'transparent', // Default button background color
+    backgroundColor: 'transparent', 
     marginBottom: 28,
-    marginTop: 'center', // Adjust marginTop to move the button up and down
+    marginTop: 'center', 
     alignItems: 'center',
   },
   seePreviousButtonText: {
-    color: '#007AFF', // Default blue color for buttons in iOS
+    color: '#007AFF', 
     fontSize: 18,
     textDecorationLine: 'underline',
   },
   getAdviceButton: {
     marginTop: 5,
-    backgroundColor: '#004aad', // Button color
+    backgroundColor: '#004aad', 
     padding: 10,
     borderRadius: 30,
     alignItems: 'center',
   },
   getAdviceButtonText: {
-    color: '#FFF', // Match Previous Advice button text color
+    color: '#FFF',
     fontSize: 18,
   },
   title: {
@@ -351,7 +361,7 @@ const styles = StyleSheet.create({
   },
   playButton: {
     marginTop: 17,
-    backgroundColor: 'transparent', // Button color
+    backgroundColor: 'transparent',
     padding: 10,
     borderRadius: 30,
     alignItems: 'center',
@@ -359,11 +369,11 @@ const styles = StyleSheet.create({
   playButtonText: {
     color: '#007AFF',
     fontSize: 18,
-    textDecorationLine: 'underline', // Underline the text
+    textDecorationLine: 'underline', 
   },
   stopButton: {
     marginTop: 0.5,
-    backgroundColor: 'transparent', // Button color
+    backgroundColor: 'transparent',
     padding: 10,
     borderRadius: 30,
     alignItems: 'center',
@@ -371,7 +381,7 @@ const styles = StyleSheet.create({
   stopButtonText: {
     color: '#007AFF',
     fontSize: 18,
-    textDecorationLine: 'underline', // Underline the text
+    textDecorationLine: 'underline',
   },
   listContainer: {
     padding: 20,
@@ -381,13 +391,15 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 30,
     marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   adviceSnippet: {
     fontSize: 16,
     color: '#004aad',
   },
   fullAdvice: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#004aad',
     textAlign: 'center',
     margin: 20,
