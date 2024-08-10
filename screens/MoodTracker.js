@@ -236,10 +236,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   emojiImage: {
-    width: 375,
-    height: 300, 
-    marginBottom: 25,
-    marginTop: -50,
+    width: 245,
+    height: 245, 
+    marginBottom: 0,
+    marginTop: -60,
     alignItems: 'center',
   },
   confirmationText: {

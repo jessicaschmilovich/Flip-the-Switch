@@ -246,9 +246,9 @@ const PositiveAdviceStack = () => {
       initialRouteName="PositiveAdviceMain"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#7bbbef', // Set the background color of the header
-          borderBottomColor: '#7bbbef', // Set the color of the bottom border
-          borderBottomWidth: 1, // Set the bottom border width if necessary
+          backgroundColor: '#7bbbef', 
+          borderBottomColor: '#7bbbef', 
+          borderBottomWidth: 1, 
         },
         headerTintColor: '#004aad', // Set the color of the back arrow
         headerTitle: '', // No title
