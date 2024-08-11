@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import DailyQuote from '../screens/DailyQuote';
 import PositiveAdvice from '../screens/PositiveAdvice';
 import MoodTracker from '../screens/MoodTracker';
-import DailyChallenge from '../screens/DailyChallenge';
+import MoodChallenge from '../screens/MoodChallenge';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,8 +36,8 @@ const BottomTabNavigator = () => {
               case 'Mood Tracker':
                 icon = require('../assets/mood tracker icon.png');
                 break;
-              case 'Daily Challenge':
-                icon = require('../assets/daily challenge icon.png');
+              case 'Mood Challenge':
+                icon = require('../assets/mood challenge icon.png');
                 break;
               default:
                 icon = null;
@@ -84,10 +84,10 @@ const BottomTabNavigator = () => {
           }}
         />
         <Tab.Screen 
-          name="Daily Challenge" 
-          component={DailyChallenge} 
+          name="Mood Challenge" 
+          component={MoodChallenge} 
           options={{
-            headerTitle: 'Daily Challenge',
+            headerTitle: 'Mood Challenge',
           }}
         />
       </Tab.Navigator>

@@ -44,25 +44,25 @@ const HomeScreen = ({ navigation }) => {
 
   const handleMoodPress = async (mood) => {
     setSelectedMood(mood);
+    await AsyncStorage.setItem('selectedMood', mood.name);  // Store selected mood
+  
     const today = new Date();
-    const localDateString = today.toLocaleDateString('en-CA'); // Use local date string in YYYY-MM-DD format
+    const localDateString = today.toLocaleDateString('en-CA');
     const dayOfWeek = today.toLocaleDateString('en-US', { weekday: 'long' });
-
+  
     const newEntry = { day: dayOfWeek, date: localDateString, mood: mood.name, color: mood.color };
-
+  
     let storedData = await AsyncStorage.getItem('weeklyData');
     storedData = storedData ? JSON.parse(storedData) : [];
-
-    // Remove any existing entry of a previous mood for today
+  
     storedData = storedData.filter(data => data.date !== localDateString);
-    // Add the new mood for today
     storedData.push(newEntry);
-
+  
     await AsyncStorage.setItem('weeklyData', JSON.stringify(storedData));
     setWeeklyData(storedData);
-
+  
     navigation.navigate('Confirmation', { mood });
-  };
+  };  
 
   return (
     <View style={styles.container}>
