@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="79V-yd-jtX">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
@@ -13,11 +13,11 @@
             <objects>
                 <viewController id="79V-yd-jtX" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YTh-8Q-RwG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Flip The Switch Launch Screen Image" translatesAutoresizingMaskIntoConstraints="NO" id="Lml-q3-lzv">
-                                <rect key="frame" x="-8" y="233" width="430" height="430"/>
+                                <rect key="frame" x="-55" y="69" width="430" height="430"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="430" id="AQG-qY-JEZ"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="320" id="Tgv-Iv-62x"/>
@@ -42,6 +42,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Flip The Switch Launch Screen Image" width="360" height="360"/>
+        <image name="Flip The Switch Launch Screen Image" width="540" height="540"/>
     </resources>
 </document>

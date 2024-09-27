@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Dimensions, Image, Animated, Alert } from 'react-native';
 
+// Get the device's screen height
 const { height } = Dimensions.get('window');
 
+// Array of quotes to be displayed
 const quotesArray = [
+  // Each object contains a quote and the author
+  { "content": "An idea holds little value without the motivation to bring it to life.", "author": "Jessica Schmilovich" },
   { "content": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt" },
   { "content": "Great things are not done by impulse but by a series of small things brought together.", "author": "Vincent Van Gogh" },
   { "content": "In the middle of every difficulty lies opportunity.", "author": "Albert Einstein" },
@@ -361,52 +365,104 @@ const quotesArray = [
   { "content": "I never dreamed about success. I worked for it.", "author": "Estee Lauder" },
   { "content": "Opportunities don't happen. You create them.", "author": "Chris Grosser" },
   { "content": "The only place where success comes before work is in the dictionary.", "author": "Vidal Sassoon" },
-  { "content": "The best way to find yourself is to lose yourself in the service of others.", "author": "Mahatma Gandhi" }
+  { "content": "The best way to find yourself is to lose yourself in the service of others.", "author": "Mahatma Gandhi" },
+  { "content": "Do not wait to strike till the iron is hot; but make it hot by striking.", "author": "William Butler Yeats" },
+  { "content": "The only limit to our realization of tomorrow is our doubts of today.", "author": "Franklin D. Roosevelt" },
+  { "content": "Action is the foundational key to all success.", "author": "Pablo Picasso" },
+  { "content": "The future depends on what we do in the present.", "author": "Mahatma Gandhi" },
+  { "content": "It is never too late to be what you might have been.", "author": "George Eliot" },
+  { "content": "Do what you can, with what you have, where you are.", "author": "Theodore Roosevelt" },
+  { "content": "Success usually comes to those who are too busy to be looking for it.", "author": "Henry David Thoreau" },
+  { "content": "Don't watch the clock; do what it does. Keep going.", "author": "Sam Levenson" },
+  { "content": "You are never too old to set another goal or to dream a new dream.", "author": "C.S. Lewis" },
+  { "content": "Start where you are. Use what you have. Do what you can.", "author": "Arthur Ashe" },
+  { "content": "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.", "author": "Ralph Waldo Emerson" },
+  { "content": "I can't change the direction of the wind, but I can adjust my sails to always reach my destination.", "author": "Jimmy Dean" },
+  { "content": "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.", "author": "Albert Schweitzer" },
+  { "content": "The secret of getting ahead is getting started.", "author": "Mark Twain" },
+  { "content": "It does not matter how slowly you go as long as you do not stop.", "author": "Confucius" },
+  { "content": "Our greatest glory is not in never falling, but in rising every time we fall.", "author": "Confucius" },
+  { "content": "You must be the change you wish to see in the world.", "author": "Mahatma Gandhi" },
+  { "content": "Keep your face always toward the sunshine—and shadows will fall behind you.", "author": "Walt Whitman" },
+  { "content": "The best revenge is massive success.", "author": "Frank Sinatra" },
+  { "content": "It always seems impossible until it's done.", "author": "Nelson Mandela" },
+  { "content": "What lies behind us and what lies before us are tiny matters compared to what lies within us.", "author": "Ralph Waldo Emerson" },
+  { "content": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt" },
+  { "content": "To live a creative life, we must lose our fear of being wrong.", "author": "Joseph Chilton Pearce" },
+  { "content": "There is only one way to avoid criticism: do nothing, say nothing, and be nothing.", "author": "Aristotle" },
+  { "content": "The only place where success comes before work is in the dictionary.", "author": "Vidal Sassoon" },
+  { "content": "Don't be afraid to give up the good to go for the great.", "author": "John D. Rockefeller" },
+  { "content": "Success is not how high you have climbed, but how you make a positive difference to the world.", "author": "Roy T. Bennett" },
+  { "content": "Success is not in what you have, but who you are.", "author": "Bo Bennett" },
+  { "content": "Your time is limited, don't waste it living someone else's life.", "author": "Steve Jobs" },
+  { "content": "The way to get started is to quit talking and begin doing.", "author": "Walt Disney" },
+  { "content": "If you really look closely, most overnight successes took a long time.", "author": "Steve Jobs" },
+  { "content": "You miss 100% of the shots you don't take.", "author": "Wayne Gretzky" },
+  { "content": "I've missed more than 9,000 shots in my career. I've lost almost 300 games. 26 times, I've been trusted to take the game-winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed.", "author": "Michael Jordan" },
+  { "content": "If you're going through hell, keep going.", "author": "Winston Churchill" },
+  { "content": "Success is walking from failure to failure with no loss of enthusiasm.", "author": "Winston Churchill" },
+  { "content": "The road to success is always under construction.", "author": "Lily Tomlin" },
+  { "content": "The only way to do great work is to love what you do.", "author": "Steve Jobs" },
+  { "content": "Failure is simply the opportunity to begin again, this time more intelligently.", "author": "Henry Ford" },
+  { "content": "Don't be pushed around by the fears in your mind. Be led by the dreams in your heart.", "author": "Roy T. Bennett" },
+  { "content": "The purpose of our lives is to be happy.", "author": "Dalai Lama" },
+  { "content": "It does not matter how slowly you go as long as you do not stop.", "author": "Confucius" },
+  { "content": "You are never too old to set another goal or to dream a new dream.", "author": "C.S. Lewis" },
+  { "content": "Your life does not get better by chance, it gets better by change.", "author": "Jim Rohn" },
+  { "content": "I find that the harder I work, the more luck I seem to have.", "author": "Thomas Jefferson" },
+  { "content": "To succeed in life, you need two things: ignorance and confidence.", "author": "Mark Twain" },
+  { "content": "What you do today can improve all your tomorrows.", "author": "Ralph Marston" },
+  { "content": "Strive not to be a success, but rather to be of value.", "author": "Albert Einstein" },
+  { "content": "The best way to predict your future is to create it.", "author": "Peter Drucker" },
+  { "content": "Hardships often prepare ordinary people for an extraordinary destiny.", "author": "C.S. Lewis" },
 ];
 
-// Simple hash function to generate a seed from a string
-const hashCode = (str) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
+// Function to generate a unique daily seed based on the current date
+const getDailySeed = () => {
+  const today = new Date();
+  // Calculate the current day of the year and multiply it by the current year
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+  const year = today.getFullYear();
+  return dayOfYear + year * 365; // Unique seed for each day
 };
 
-// Seeded pseudo-random number generator
+// A simple seeded random number generator
 const seededRandom = (seed) => {
-  const x = Math.sin(seed++) * 10000;
+  // Using sine function to generate a pseudo-random number
+  let x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 };
 
+// Function to get the daily quote based on the seeded random value
 const getDailyQuote = () => {
-  const today = new Date().toLocaleDateString(); // Get the current date in local string format
-  const seed = hashCode(today);
-  const randomIndex = Math.floor(seededRandom(seed) * quotesArray.length);
+  const seed = getDailySeed();
+  const randomIndex = Math.floor(seededRandom(seed) * quotesArray.length); // Pick a random quote
   return quotesArray[randomIndex];
 };
 
+// The main component that displays the quote
 const QuoteScreen = () => {
-  const [quote, setQuote] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [showGif, setShowGif] = useState(true);
-  const fadeAnim = useState(new Animated.Value(1))[0];
+  const [quote, setQuote] = useState(null); // State to store the daily quote
+  const [loading, setLoading] = useState(true); // State to manage the loading indicator
+  const [showGif, setShowGif] = useState(true); // State to manage the visibility of the gif
+  const fadeAnim = new Animated.Value(1); // Animated value for fading out the gif
 
   useEffect(() => {
+    // Get the daily quote and stop loading
     const dailyQuote = getDailyQuote();
     setQuote(dailyQuote);
     setLoading(false);
 
+    // Timer to fade out the gif after 1.8 seconds
     const timer = setTimeout(() => {
       Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 1000,
+        toValue: 0, // Fade to zero opacity
+        duration: 1000, // 1-second duration for fading
         useNativeDriver: true,
-      }).start(() => setShowGif(false));
+      }).start(() => setShowGif(false)); // Hide the gif after fading
     }, 1800);
 
+    // Clean up the timer when the component unmounts
     return () => {
       clearTimeout(timer);
     };
@@ -414,14 +470,18 @@ const QuoteScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Show the gif while it is still visible */}
       {showGif && (
         <Animated.View style={[styles.gifContainer, { opacity: fadeAnim }]}>
           <Image source={require('../assets/gold-glitter.gif')} style={styles.gif} />
         </Animated.View>
       )}
+
+      {/* Show a loading indicator while fetching the quote */}
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
+        // Show the quote and author when loading is complete
         <Animated.View style={styles.quoteContainer}>
           <Text style={styles.quoteText}>“{quote.content}”</Text>
           <Text style={styles.quoteAuthor}>- {quote.author}</Text>
@@ -431,23 +491,24 @@ const QuoteScreen = () => {
   );
 };
 
+// Styles for the Flip The Switch Quote of the Day page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7bbbef',
+    backgroundColor: '#7bbbef', // Background color for the container
   },
   gifContainer: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1,
+    zIndex: 1, // Keep the gif on top
   },
   gif: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
+    resizeMode: 'cover', // Make the gif cover the entire screen
   },
   quoteContainer: {
     padding: 18,
@@ -462,14 +523,14 @@ const styles = StyleSheet.create({
   quoteText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#004aad',
+    color: '#004aad', // Color for the quote text
     textAlign: 'center',
     marginBottom: 10,
   },
   quoteAuthor: {
     fontSize: 18,
     textAlign: 'center',
-    color: '#004aad',
+    color: '#004aad', // Color for the author text
   },
 });
 

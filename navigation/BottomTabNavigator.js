@@ -27,7 +27,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => {
             let icon;
             switch (route.name) {
-              case 'Daily Quote':
+              case 'Quote of the Day':
                 icon = require('../assets/daily quote icon.png');
                 break;
               case 'Positive Advice':
@@ -63,10 +63,10 @@ const BottomTabNavigator = () => {
         })}
       >
         <Tab.Screen 
-          name="Daily Quote" 
+          name="Quote of the Day" 
           component={DailyQuote} 
           options={{
-            headerTitle: 'Daily Quote',
+            headerTitle: 'Quote of the Day',
           }}
         />
         <Tab.Screen 

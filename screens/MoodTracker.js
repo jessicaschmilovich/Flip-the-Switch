@@ -4,65 +4,100 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { getISOWeek } from 'date-fns';
 
+// Array of available moods, each with a name and a color
 const moods = [
-  { name: 'Happy', color: '#ffc000' },
-  { name: 'Excited', color: '#ffb3c6' },
-  { name: 'Calm', color: 'green' },
-  { name: 'Neutral', color: '#a000c8' },
-  { name: 'Anxious', color: '#ff7600' },
-  { name: 'Angry', color: 'red' },
-  { name: 'Sad', color: 'gray' },
-  { name: 'Hopeless', color: '#333333' },
+  { name: 'happy', color: '#ffc000' },
+  { name: 'excited', color: '#fc97b1' },
+  { name: 'calm', color: 'green' },
+  { name: 'neutral', color: '#a000c8' },
+  { name: 'anxious', color: '#ff7600' },
+  { name: 'angry', color: 'red' },
+  { name: 'sad', color: 'gray' },
+  { name: 'hopeless', color: '#333333' },
 ];
 
+// Mapping of mood names to corresponding emoji images
 const moodEmojis = {
-  Happy: require('../assets/Happy Emoji.png'),
-  Excited: require('../assets/Excited Emoji.png'),
-  Calm: require('../assets/Calm Emoji.png'),
-  Neutral: require('../assets/Neutral Emoji.png'),
-  Anxious: require('../assets/Anxious Emoji.png'),
-  Angry: require('../assets/Angry Emoji.png'),
-  Sad: require('../assets/Sad Emoji.png'),
-  Hopeless: require('../assets/Hopeless Emoji.png'),
+  happy: require('../assets/Happy Emoji.png'),
+  excited: require('../assets/Excited Emoji.png'),
+  calm: require('../assets/Calm Emoji.png'),
+  neutral: require('../assets/Neutral Emoji.png'),
+  anxious: require('../assets/Anxious Emoji.png'),
+  angry: require('../assets/Angry Emoji.png'),
+  sad: require('../assets/Sad Emoji.png'),
+  hopeless: require('../assets/Hopeless Emoji.png'),
 };
 
+// Function to check if weekly data needs to be reset based on the current week number
+const clearWeeklyDataIfNecessary = async () => {
+  const now = new Date();
+  const currentWeekNumber = getISOWeek(now); // Get the current ISO week number
+  const lastResetWeekNumber = await AsyncStorage.getItem('lastResetWeekNumber');
+
+  if (lastResetWeekNumber !== String(currentWeekNumber)) {
+    // Reset weekly data if we're in a new week
+    await AsyncStorage.removeItem('weeklyData');
+    await AsyncStorage.setItem('lastResetWeekNumber', String(currentWeekNumber));
+    return true; // Reset occurred
+  }
+
+  return false; // No reset needed
+};
+
+// Home screen where users select their mood
 const HomeScreen = ({ navigation }) => {
-  const [selectedMood, setSelectedMood] = useState(null);
-  const [weeklyData, setWeeklyData] = useState([]);
+  const [selectedMood, setSelectedMood] = useState(null); // State to track selected mood
+  const [weeklyData, setWeeklyData] = useState([]); // State to store weekly mood data
 
   useEffect(() => {
-    const fetchWeeklyData = async () => {
-      const storedData = await AsyncStorage.getItem('weeklyData');
-      if (storedData) {
-        setWeeklyData(JSON.parse(storedData));
+    const loadInitialData = async () => {
+      const resetOccurred = await clearWeeklyDataIfNecessary();
+
+      if (resetOccurred) {
+        setWeeklyData([]); // Reset the weekly data if necessary
+      } else {
+        // Load existing weekly data if no reset
+        const storedWeeklyData = await AsyncStorage.getItem('weeklyData');
+        if (storedWeeklyData) {
+          setWeeklyData(JSON.parse(storedWeeklyData));
+        }
+      }
+
+      // Load the last selected mood from AsyncStorage
+      const storedMood = await AsyncStorage.getItem('selectedMood');
+      if (storedMood) {
+        const mood = moods.find(m => m.name === storedMood); // Find mood by name
+        setSelectedMood(mood);
       }
     };
 
-    fetchWeeklyData();
+    loadInitialData();
   }, []);
 
+  // Function to handle when a mood is pressed
   const handleMoodPress = async (mood) => {
-    setSelectedMood(mood);
-    await AsyncStorage.setItem('selectedMood', mood.name);  // Store selected mood
-  
+    setSelectedMood(mood); // Set the selected mood in state
+    await AsyncStorage.setItem('selectedMood', mood.name); // Store the selected mood
+
     const today = new Date();
-    const localDateString = today.toLocaleDateString('en-CA');
+    const localDateString = today.toLocaleDateString('en-CA'); // Store the date in YYYY-MM-DD format
     const dayOfWeek = today.toLocaleDateString('en-US', { weekday: 'long' });
-  
+
+    // Create a new entry for today
     const newEntry = { day: dayOfWeek, date: localDateString, mood: mood.name, color: mood.color };
-  
-    let storedData = await AsyncStorage.getItem('weeklyData');
-    storedData = storedData ? JSON.parse(storedData) : [];
-  
-    storedData = storedData.filter(data => data.date !== localDateString);
-    storedData.push(newEntry);
-  
-    await AsyncStorage.setItem('weeklyData', JSON.stringify(storedData));
-    setWeeklyData(storedData);
-  
+
+    // Update the weekly data, removing any old entry for today
+    let updatedWeeklyData = [...weeklyData];
+    updatedWeeklyData = updatedWeeklyData.filter(data => data.date !== localDateString);
+    updatedWeeklyData.push(newEntry);
+
+    // Save updated data and navigate to confirmation screen
+    await AsyncStorage.setItem('weeklyData', JSON.stringify(updatedWeeklyData));
+    setWeeklyData(updatedWeeklyData);
     navigation.navigate('Confirmation', { mood });
-  };  
+  };
 
   return (
     <View style={styles.container}>
@@ -88,8 +123,9 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+// Confirmation screen showing the selected mood
 const ConfirmationScreen = ({ route, navigation }) => {
-  const { mood } = route.params;
+  const { mood } = route.params; // Get the passed mood from route params
 
   return (
     <View style={styles.confirmationContainer}>
@@ -105,10 +141,12 @@ const ConfirmationScreen = ({ route, navigation }) => {
   );
 };
 
+// Weekly summary screen showing a list of moods tracked for the week
 const WeeklySummaryScreen = ({ navigation }) => {
-  const [weeklyData, setWeeklyData] = useState([]);
+  const [weeklyData, setWeeklyData] = useState([]); // State to store weekly data
 
   useEffect(() => {
+    // Fetch weekly data from AsyncStorage
     const fetchWeeklyData = async () => {
       const storedData = await AsyncStorage.getItem('weeklyData');
       if (storedData) {
@@ -119,6 +157,7 @@ const WeeklySummaryScreen = ({ navigation }) => {
     fetchWeeklyData();
   }, []);
 
+  // Function to sort weekly data by date
   const getSortedWeeklyData = (data) => {
     return data.sort((a, b) => new Date(a.date) - new Date(b.date));
   };
@@ -132,7 +171,7 @@ const WeeklySummaryScreen = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.header}>Weekly Mood Summary</Text>
       {sortedWeeklyData.length === 0 ? (
-        <Text style={styles.noDataText}>No data available</Text>
+        <Text style={styles.noDataText}></Text>
       ) : (
         <FlatList
           data={sortedWeeklyData}
@@ -151,6 +190,7 @@ const WeeklySummaryScreen = ({ navigation }) => {
   );
 };
 
+// Stack Navigator for navigation structure
 const Stack = createStackNavigator();
 
 const MoodTracker = () => {
@@ -165,6 +205,7 @@ const MoodTracker = () => {
   );
 };
 
+// Styles for Flip The Switch Mood Tracker page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -177,7 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#7bbbef',
     padding: 20,
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   header: {
     fontSize: 23,
@@ -186,21 +227,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 20,
     textAlign: 'center',
-  },
-  customHeader: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  summaryButtonAbsolute: {
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
   },
   moodContainer: {
     flexDirection: 'row',
@@ -237,7 +263,7 @@ const styles = StyleSheet.create({
   },
   emojiImage: {
     width: 245,
-    height: 245, 
+    height: 245,
     marginBottom: 0,
     marginTop: -60,
     alignItems: 'center',
@@ -261,19 +287,23 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dayText: {
-    fontSize: 18,
+    fontSize: 18.5,
     fontWeight: 'bold',
     marginRight: 10,
+    marginBottom: 10,
+    marginTop: 10,
   },
   moodBox: {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 0.5,
     borderRadius: 30,
-    alignItems: 'center', // Center the mood boxes
   },
   moodText: {
     color: '#fff',
-    fontSize: 15.5, 
+    fontSize: 15.89,
     fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 10,
   },
   headerBackButton: {
     position: 'absolute',
@@ -285,6 +315,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#777',
     textAlign: 'center',
+    color: '#004aad',
   },
 });
 

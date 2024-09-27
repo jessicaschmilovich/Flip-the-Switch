@@ -7,24 +7,23 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Flip_the_Switch_splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7bbbef" 
     },
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/Flip the Switch Favicon.png"
     },
     "plugins": [
       "react-native-background-fetch"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ac00b0fd-116e-4afd-a6bd-2db5c7fcc553"
+      }
+    }
   }
 }

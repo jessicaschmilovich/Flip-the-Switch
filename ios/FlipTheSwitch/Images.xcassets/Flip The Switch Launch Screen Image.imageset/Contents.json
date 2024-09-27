@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Flip The Switch Launch Screen Image.jpg",
+      "filename" : "Flip The Switch Launch Screen Image.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Flip The Switch Launch Screen Image 1.jpg",
+      "filename" : "Flip The Switch Launch Screen Image 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Flip The Switch Launch Screen Image 2.jpg",
+      "filename" : "Flip The Switch Launch Screen Image 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
