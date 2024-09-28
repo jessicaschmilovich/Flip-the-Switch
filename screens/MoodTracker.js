@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -141,50 +141,55 @@ const ConfirmationScreen = ({ route, navigation }) => {
   );
 };
 
-// Weekly summary screen showing a list of moods tracked for the week
 const WeeklySummaryScreen = ({ navigation }) => {
-  const [weeklyData, setWeeklyData] = useState([]); // State to store weekly data
+  const [weeklyData, setWeeklyData] = useState([]); // State to store weekly data for the current week
 
   useEffect(() => {
-    // Fetch weekly data from AsyncStorage
+    // Fetch weekly data from AsyncStorage on component mount
     const fetchWeeklyData = async () => {
-      const storedData = await AsyncStorage.getItem('weeklyData');
+      const storedData = await AsyncStorage.getItem('weeklyData'); // Retrieve weekly data from local storage
       if (storedData) {
-        setWeeklyData(JSON.parse(storedData));
+        setWeeklyData(JSON.parse(storedData)); // Parse and set the weekly data if it exists
       }
     };
 
-    fetchWeeklyData();
-  }, []);
+    fetchWeeklyData(); // Call the function to load the data
+  }, []); // Empty dependency array ensures this only runs on component mount
 
-  // Function to sort weekly data by date
+  // Function to sort the weekly data by date in ascending order
   const getSortedWeeklyData = (data) => {
-    return data.sort((a, b) => new Date(a.date) - new Date(b.date));
+    return data.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort based on the date field
   };
 
-  const sortedWeeklyData = getSortedWeeklyData(weeklyData);
+  const sortedWeeklyData = getSortedWeeklyData(weeklyData); // Store sorted data for rendering
 
   return (
     <View style={styles.weeklySummaryContainer}>
+      {/* Back button to navigate to the previous screen */}
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBackButton}>
         <Ionicons name="arrow-back" size={24} color="#004aad" />
       </TouchableOpacity>
+      
+      {/* Header text for the weekly summary */}
       <Text style={styles.header}>Weekly Mood Summary</Text>
+      
+      {/* If no mood data is available, show a message; otherwise, render the mood entries */}
       {sortedWeeklyData.length === 0 ? (
-        <Text style={styles.noDataText}></Text>
+        <Text style={styles.noDataText}>No data available</Text>
       ) : (
-        <FlatList
-          data={sortedWeeklyData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.moodItem}>
+        // Rendering mood entries for the current week
+        <View>
+          {sortedWeeklyData.map((item, index) => (
+            <View key={index} style={styles.moodItem}>
+              {/* Displaying the day of the week */}
               <Text style={styles.dayText}>{item.day}:</Text>
+              {/* Displaying the mood and associated color */}
               <View style={[styles.moodBox, { backgroundColor: item.color }]}>
                 <Text style={styles.moodText}>{item.mood}</Text>
               </View>
             </View>
-          )}
-        />
+          ))}
+        </View>
       )}
     </View>
   );
