@@ -115,7 +115,8 @@ const MoodChallengeScreen = ({ navigation }) => {
     };
 
     loadChallenge(); // Load the challenge when the component mounts
-    const intervalId = setInterval(checkMoodChangeAndUpdate, 500); // Periodically check for mood changes
+    checkMoodChangeAndUpdate(); // Immediately check and update the challenge for the first mood selection
+    const intervalId = setInterval(checkMoodChangeAndUpdate, 300); // Periodically check for mood changes
 
     // Listener to reload challenge data when the screen gains focus
     const focusListener = navigation.addListener('focus', loadChallenge);
@@ -153,7 +154,7 @@ const MoodChallengeScreen = ({ navigation }) => {
           messages: [
             {
               role: 'system',
-              content: `Be creative. Generate a completely unique (never repeat or closely resemble previous suggestions) mood-specific challenge that helps someone improve their mood, uplift them, or maintain positive energy. Each challenge must include a title on the first line in bold, 22pt font, and in title case (capitalized). The description must follow on the next line in 20pt font, no more than 30 words, and not bolded. Avoid using emojis, and do not use the word "challenge" in the title. Ensure that the challenges are highly varied, incorporating a wide range of activities (physical, creative, social, reflective, or practical actions) to maintain novelty. While key terms like gratitude, art, collage, nature, sunshine, or serenity can be used, limit their frequency to maintain creative diversity. Avoid relying on similar themes repeatedly, and ensure that each challenge offers fresh and unique approaches to fit the user's mood.`,
+              content: `Be creative. Generate a completely unique (never repeat or closely resemble previous suggestions) mood-specific challenge that helps someone improve their mood, uplift them, or maintain positive energy. Each challenge must include a title on the first line in bold, 22pt font, and in title case (capitalized). The description must follow on the next line in 20pt font, no more than 30 words, and not bolded. Avoid using emojis, and do not use the word "challenge" in the title. Ensure that the challenges are highly varied, incorporating a wide range of activities (physical, creative, social, reflective, or practical actions) to maintain novelty. While key terms like gratitude, art, collage, nature, sunshine, jukebox, or serenity can be used, limit their frequency to maintain creative diversity. Avoid relying on similar themes repeatedly, and ensure that each challenge offers fresh and unique approaches to fit the user's mood.`,
             },
             {
               role: 'user',
