@@ -175,7 +175,7 @@ const WeeklySummaryScreen = ({ navigation }) => {
       
       {/* If no mood data is available, show a message; otherwise, render the mood entries */}
       {sortedWeeklyData.length === 0 ? (
-        <Text style={styles.noDataText}>No data available</Text>
+        <Text style={styles.noDataText}>Track moods to view here!</Text>
       ) : (
         // Rendering mood entries for the current week
         <View>
