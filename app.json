@@ -4,7 +4,7 @@
     "slug": "FlipTheSwitch",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Flip the Switch Favicon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/Flip_the_Switch_splash.png",
@@ -14,8 +14,15 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/Flip the Switch Favicon.png",
+        "backgroundColor": "#7bbbef"
+      },
+      "package": "com.fliptheswitch.app"
+    },
     "web": {
-      "favicon": "./assets/Flip the Switch Favicon.png"
+      "favicon": "./assets/Flip_the_Switch_Favicon.png"
     },
     "plugins": [
       "react-native-background-fetch"
