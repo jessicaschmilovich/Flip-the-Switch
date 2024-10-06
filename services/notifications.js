@@ -216,7 +216,7 @@ export const NotificationPrompt = ({ visible, onClose }) => {
   );
 };
 
-// Styles for the Notification popup and buttons
+// Styles for the Notification pop up and buttons
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
