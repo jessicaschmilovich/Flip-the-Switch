@@ -86,7 +86,11 @@ export const scheduleWeeklyNotification = async () => {
     
     // Check if the weekly notification for Sunday at 7 PM is already scheduled
     const isAlreadyScheduled = existingNotifications.some(
-      (notification) => notification.trigger?.weekday === 1 && notification.trigger?.hour === 19
+      (notification) =>
+        notification.trigger?.repeats &&
+        notification.trigger?.weekday === 1 &&
+        notification.trigger?.hour === 19 &&
+        notification.trigger?.minute === 0
     );
 
     // If the notification is already scheduled, exit the function to prevent duplication
@@ -99,15 +103,16 @@ export const scheduleWeeklyNotification = async () => {
     const schedulingOptions = {
       content: {
         // Set the notification title based on the prevalent mood
-        title: (prevalentMood === 'noData') 
-                ? 'No Data' 
-                : `Overall Mood This Week: ${prevalentMood.charAt(0).toUpperCase() + prevalentMood.slice(1)}`,
+        title:
+          prevalentMood === 'noData'
+            ? 'No Data'
+            : `Overall Mood This Week: ${prevalentMood.charAt(0).toUpperCase() + prevalentMood.slice(1)}`,
         
         // Set the notification body text to the appropriate mood message
-        body: message, 
+        body: message,
       },
       trigger: {
-        hour: 19,  // Set the notification to trigger at 7 PM
+        hour: 19, // Set the notification to trigger at 7 PM
         minute: 0, // On the hour
         weekday: 1, // Set the notification to trigger on Sundays (weekday: 1)
         repeats: true, // Ensure the notification repeats every week
@@ -123,7 +128,6 @@ export const scheduleWeeklyNotification = async () => {
 
     // Schedule the new notification with the defined options
     await Notifications.scheduleNotificationAsync(schedulingOptions);
-
   } catch (error) {
     // Handle any errors that occur during scheduling (log silently or provide error feedback)
     console.error('Error scheduling weekly notification:', error);
