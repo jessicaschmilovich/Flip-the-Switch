@@ -17,152 +17,153 @@ const notificationMessages = {
   noData: "Don't forget to select your daily mood to track your well-being! Your entries help provide you with personalized insights and support."
 };
 
-// Get the most prevalent mood from the weekly data
+// Function to get the most prevalent mood from weekly data stored in AsyncStorage
 const getMostPrevalentMood = async () => {
   try {
+    // Retrieve weekly mood data from AsyncStorage
     const storedData = await AsyncStorage.getItem('weeklyData');
     
-    // If no data is stored, return 'noData' as the default mood
+    // If no data is stored, return 'noData' as a fallback
     if (!storedData) {
       return 'noData';
     }
 
+    // Parse the retrieved data from JSON format
     const weeklyData = JSON.parse(storedData);
     
-    // If the parsed weekly data array is empty, return 'noData'
+    // Return 'noData' if the weekly data array is empty
     if (weeklyData.length === 0) {
       return 'noData';
     }
 
-    // Count the occurrences of each mood from the weekly data
+    // Count occurrences of each mood in the weekly data
     const moodCount = weeklyData.reduce((acc, current) => {
       const mood = current.mood.toLowerCase();
       acc[mood] = (acc[mood] || 0) + 1;
       return acc;
     }, {});
 
-    let prevalentMood = 'mixed';  // Mood in cases where no clear emotional trend emerges
+    let prevalentMood = 'mixed';  // Default mood if the data doesn't show a clear trend
     let maxCount = 0;
 
-    // Iterate over the mood counts to determine the most prevalent mood
+    // Determine the most prevalent mood by iterating over the mood counts
     for (const [mood, count] of Object.entries(moodCount)) {
       if (count > maxCount) {
         prevalentMood = mood;
         maxCount = count;
       } else if (count === maxCount) {
-        prevalentMood = 'mixed';
+        prevalentMood = 'mixed';  // Handle ties by setting the mood to 'mixed'
       }
     }
 
     return prevalentMood;
   } catch (error) {
+    // Return 'noData' in case of an error (e.g., if data retrieval fails)
     return 'noData';
   }
 };
 
-// Schedule the weekly notification on Sunday at 7 PM
+// Function to schedule a weekly notification on Sunday at 7 PM
 export const scheduleWeeklyNotification = async () => {
   try {
+    // Retrieve the most prevalent mood for the week
     const prevalentMood = await getMostPrevalentMood();
-    const message = notificationMessages[prevalentMood];
+    const message = notificationMessages[prevalentMood];  // Get the corresponding message for the prevalent mood
 
-    // Retrieve all scheduled notifications
+    // Get all scheduled notifications
     const existingNotifications = await Notifications.getAllScheduledNotificationsAsync();
 
-    // Check if there are any notifications already scheduled for Sunday at 7 PM
+    // Check if a notification is already scheduled for Sunday at 7 PM
     const isSundayNotificationScheduled = existingNotifications.some(
       (notification) =>
         notification.trigger?.repeats &&
-        notification.trigger?.weekday === 1 &&
-        notification.trigger?.hour === 19 &&
+        notification.trigger?.weekday === 1 &&  // Sunday
+        notification.trigger?.hour === 19 &&    // 7 PM
         notification.trigger?.minute === 0
     );
 
-    // If the notification for Sunday at 7 PM is already scheduled, exit
+    // If a notification is already scheduled for Sunday at 7 PM, do nothing
     if (isSundayNotificationScheduled) {
       console.log("Sunday notification at 7 PM is already scheduled.");
       return;
     }
 
-    // Schedule a new notification for Sunday at 7 PM
+    // Schedule a new weekly notification for Sunday at 7 PM
     await Notifications.scheduleNotificationAsync({
       content: {
         title: prevalentMood === 'noData' 
           ? 'No Data' 
           : `Overall Mood This Week: ${prevalentMood.charAt(0).toUpperCase() + prevalentMood.slice(1)}`,
-        body: message,
+        body: message,  // Notification body with the message based on mood
       },
       trigger: {
         hour: 19,        // 7 PM
-        minute: 0,       // 0 minutes past the hour
+        minute: 0,       // On the hour
         weekday: 1,      // Sunday
-        repeats: true,   // Repeats weekly
+        repeats: true,   // Ensures the notification repeats weekly
       },
     });
 
     console.log("Weekly notification scheduled for Sunday at 7 PM.");
   } catch (error) {
-    console.error('Error scheduling weekly notification:', error);
+    console.error('Error scheduling weekly notification:', error);  // Log any errors that occur during scheduling
   }
 };
 
-// Register for push notifications
+// Function to register the device for push notifications
 export const registerForPushNotificationsAsync = async () => {
   try {
+    // Check if the app is running on a physical device
     if (Device.isDevice) {
+      // Get the current notification permission status
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
 
+      // If permission is not granted, request it from the user
       if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
 
+      // If the user denies permission, show an alert and return
       if (finalStatus !== 'granted') {
         Alert.alert('Failed to get push token for push notification!');
         return;
       }
 
-      // If permissions are granted, schedule the weekly notification
+      // If permission is granted, schedule the weekly notification
       await scheduleWeeklyNotification();
     } else {
+      // If running on a simulator/emulator, show a warning that notifications don't work on simulators
       Alert.alert('Must use physical device for Push Notifications');
     }
   } catch (error) {
-    console.error('Error registering for notifications:', error);
+    console.error('Error registering for notifications:', error);  // Log any errors that occur during the registration process
   }
 };
 
-// Notification prompt component
+// Component to show a modal prompting the user to enable notifications
 export const NotificationPrompt = ({ visible, onClose }) => {
-  // Handle enabling notifications when the user chooses to enable them
+  // Handle enabling notifications when the user opts to enable them
   const handleRegisterNotifications = async () => {
-    // Register the device for push notifications
-    await registerForPushNotificationsAsync();
-    
-    // Store a flag indicating that notifications are enabled
-    await AsyncStorage.setItem('notificationsEnabled', 'true');
-    
-    // Close the modal prompt
-    onClose();
+    await registerForPushNotificationsAsync();  // Register for push notifications
+    await AsyncStorage.setItem('notificationsEnabled', 'true');  // Store the notification preference
+    onClose();  // Close the modal
   };
 
   // Handle skipping the notifications setup
   const handleSkip = async () => {
-    // Store a flag indicating that notifications are disabled
-    await AsyncStorage.setItem('notificationsEnabled', 'false');
-    
-    // Close the modal prompt
-    onClose();
+    await AsyncStorage.setItem('notificationsEnabled', 'false');  // Store the user's choice to skip notifications
+    onClose();  // Close the modal
   };
 
-  // Return the modal component with buttons to enable or skip notifications
+  // Render the pop up with options to enable or skip notifications
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}
+      onRequestClose={onClose}  // Handle pop up close action
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
