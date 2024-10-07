@@ -97,10 +97,10 @@ export const scheduleWeeklyNotification = async () => {
         body: message,  // Notification body with the message based on mood
       },
       trigger: {
-        hour: 19,        // 7 PM
-        minute: 0,       // On the hour
-        weekday: 1,      // Sunday
-        repeats: true,   // Ensures the notification repeats weekly
+        hour: 19, // 7 PM
+        minute: 0, // On the hour
+        weekday: 1, // Sunday
+        repeats: true, // Ensures the notification repeats weekly
       },
     });
 
