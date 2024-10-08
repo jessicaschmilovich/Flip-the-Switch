@@ -84,7 +84,6 @@ export const scheduleWeeklyNotification = async () => {
 
     // If a notification is already scheduled for Sunday at 7 PM, do nothing
     if (isSundayNotificationScheduled) {
-      console.log("Sunday notification at 7 PM is already scheduled.");
       return;
     }
 
@@ -104,7 +103,6 @@ export const scheduleWeeklyNotification = async () => {
       },
     });
 
-    console.log("Weekly notification scheduled for Sunday at 7 PM.");
   } catch (error) {
     console.error('Error scheduling weekly notification:', error);  // Log any errors that occur during scheduling
   }
