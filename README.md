@@ -64,6 +64,15 @@ services/
 notifications.js: Manages app notifications, including reminders and motivational updates.
 
 
+
+
+
+
+
+
+
+
+
 App.js: The main entry point for the app that initializes and renders the primary components.
 
 app.json: Configuration file for Expo, containing metadata and settings.
