@@ -1,5 +1,3 @@
-Flip the Switch
-
 Flip the Switch is a personalized mental well-being app designed to encourage positivity, build resilience, and help users manage their emotions through motivational quotes, positive advice, mood tracking, and adaptive mood-based challenges.
 
 Features
