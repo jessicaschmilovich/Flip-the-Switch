@@ -25,14 +25,41 @@ Users can mark challenges as completed for a sense of accomplishment.
 Receive personalized weekly notifications summarizing your mood trends.
 Notifications provide motivational advice, reminders, and encouragement to keep you on track.
 
-How It Works:
+Project Structure:
 
-Log Your Mood: Select from a wide range of emotional states throughout the day.
+assets/  
+Contains visual assets used for the app. Includes icons representing each feature (e.g., mood tracking, positive advice, mood challenges, and daily quotes) and additional icons used in Positive Advice (e.g., Listen and Stop).
 
-Receive Mood-Based Challenges: Get a personalized task using AI tailored to your logged mood, which adapts if your mood changes.
+navigation/  
+BottomTabNavigator.js: Handles bottom tab navigation for switching between the app's main screens.
 
-Access Positive Advice: Share thoughts anonymously and receive tailored support with this AI feature.
+screens/ 
+Contains the app's core UI components, including:
+- DailyQuote.js: Displays the daily motivational quote to the user.  
+- MoodChallenge.js: Manages and displays mood-based challenges.  
+- MoodTracker.js: Handles mood tracking functionality.  
+- PositiveAdvice.js: Provides users with personalized positive advice based on their input.
 
-View Daily Quotes: Start your day with an inspiring message.
+services/  
+notifications.js: Manages app notifications, including reminders and motivational updates.
 
-Track Progress: Monitor trends and see how your mood evolves over time with weekly notifications and the weekly mood summary of your mood.
+App.js  
+The main entry point for the app that initializes and renders the primary components.
+
+README.md  
+Documentation for the app, including its features and project structure.
+
+app.json  
+Configuration file for Expo, containing metadata and settings.
+
+babel.config.js  
+Configuration file for Babel, used for transpiling JavaScript.
+
+eas.json  
+Expo Application Services configuration file for builds and deployment.
+
+package.json  
+Specifies project dependencies and npm scripts.
+
+package-lock.json  
+Locks dependency versions for consistent builds.
