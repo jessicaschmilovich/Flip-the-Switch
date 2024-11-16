@@ -37,8 +37,7 @@ Flip the Switch is a personalized mental well-being app designed to encourage po
 
 - Notifications provide motivational advice, reminders, and encouragement to keep you on track.
 
-**Project Structure:**
-
+**Project Structure:**  
 assets/  
 Contains visual assets used for the app. Includes icons representing each feature (e.g., mood tracking, positive advice, mood challenges, and daily quotes) and additional icons used in Positive Advice (e.g., Listen and Stop).
 
