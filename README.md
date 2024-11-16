@@ -5,37 +5,37 @@ Flip the Switch is a personalized mental well-being app designed to encourage po
 Features:
 1. Daily Quotes
 
-Start your day with an uplifting message from a collection of over 400 hand-selected motivational quotes.
+- Start your day with an uplifting message from a collection of over 400 hand-selected motivational quotes.
 
-A new quote is displayed every day to inspire and encourage positivity.
+- A new quote is displayed every day to inspire and encourage positivity.
 
 2. Positive Advice
 
-Share your thoughts and receive personalized, AI-driven advice tailored to your emotional needs.
+- Share your thoughts and receive personalized, AI-driven advice tailored to your emotional needs.
 
-Anonymously express yourself without revealing your identity, ensuring a safe and supportive experience.
+- Anonymously express yourself without revealing your identity, ensuring a safe and supportive experience.
 
 3. Mood Tracker
 
-Log your mood daily to gain insights into your emotional well-being.
+- Log your mood daily to gain insights into your emotional well-being.
 
-Users can choose to update their mood throughout the day if it changes.
+- Users can choose to update their mood throughout the day if it changes.
 
-Helps users reflect and take proactive steps to improve their negative mood or continue feeling their positive mood.
+- Helps users reflect and take proactive steps to improve their negative mood or continue feeling their positive mood.
 
 4. Mood Challenges
 
-Receive a challenge utilizing AI tailored to the mood you log, designed to uplift or maintain your emotional state.
+- Receive a challenge utilizing AI tailored to the mood you log, designed to uplift or maintain your emotional state.
 
-Challenges adapt dynamically if your mood changes throughout the day, ensuring relevance and personalization.
+- Challenges adapt dynamically if your mood changes throughout the day, ensuring relevance and personalization.
 
-Users can mark challenges as completed for a sense of accomplishment.
+- Users can mark challenges as completed for a sense of accomplishment.
 
 5. Notifications
 
-Receive personalized weekly notifications summarizing your mood trends.
+- Receive personalized weekly notifications summarizing your mood trends.
 
-Notifications provide motivational advice, reminders, and encouragement to keep you on track.
+- Notifications provide motivational advice, reminders, and encouragement to keep you on track.
 
 Project Structure:
 
