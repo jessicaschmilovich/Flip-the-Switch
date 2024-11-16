@@ -67,10 +67,6 @@ App.js
 
 The main entry point for the app that initializes and renders the primary components.
 
-README.md  
-
-Documentation for the app, including its features and project structure.
-
 app.json  
 
 Configuration file for Expo, containing metadata and settings.
