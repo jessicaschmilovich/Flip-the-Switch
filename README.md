@@ -63,26 +63,14 @@ services/
 
 notifications.js: Manages app notifications, including reminders and motivational updates.
 
-App.js  
+App.js: The main entry point for the app that initializes and renders the primary components.
 
-The main entry point for the app that initializes and renders the primary components.
+app.json: Configuration file for Expo, containing metadata and settings.
 
-app.json  
+babel.config.js: Configuration file for Babel, used for transpiling JavaScript.
 
-Configuration file for Expo, containing metadata and settings.
+eas.json: Expo Application Services configuration file for builds and deployment.
 
-babel.config.js  
+package.json: Specifies project dependencies and npm scripts.
 
-Configuration file for Babel, used for transpiling JavaScript.
-
-eas.json  
-
-Expo Application Services configuration file for builds and deployment.
-
-package.json  
-
-Specifies project dependencies and npm scripts.
-
-package-lock.json  
-
-Locks dependency versions for consistent builds.
+package-lock.json: Locks dependency versions for consistent builds.
