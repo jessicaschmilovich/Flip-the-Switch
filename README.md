@@ -60,18 +60,7 @@ Contains the app's core UI components, including:
 - PositiveAdvice.js: Provides users with personalized positive advice based on their input.
 
 services/  
-
 notifications.js: Manages app notifications, including reminders and motivational updates.
-
-
-
-
-
-
-
-
-
-
 
 App.js: The main entry point for the app that initializes and renders the primary components.
 
