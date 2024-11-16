@@ -2,7 +2,7 @@
 
 Flip the Switch is a personalized mental well-being app designed to encourage positivity, build resilience, and help users manage their emotions through motivational quotes, positive advice, mood tracking, and adaptive mood-based challenges.
 
-Features:
+**Features:**
 1. Daily Quotes
 
 - Start your day with an uplifting message from a collection of over 400 hand-selected motivational quotes.
