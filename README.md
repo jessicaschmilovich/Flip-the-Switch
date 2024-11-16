@@ -26,6 +26,7 @@ Receive personalized weekly notifications summarizing your mood trends.
 Notifications provide motivational advice, reminders, and encouragement to keep you on track.
 
 How It Works:
+
 Log Your Mood: Select from a wide range of emotional states throughout the day.
 
 Receive Mood-Based Challenges: Get a personalized task using AI tailored to your logged mood, which adapts if your mood changes.
