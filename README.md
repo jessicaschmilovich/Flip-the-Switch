@@ -42,8 +42,9 @@ Flip the Switch is a personalized mental well-being app designed to encourage po
 assets/  
 Contains visual assets used for the app. Includes icons representing each feature (e.g., mood tracking, positive advice, mood challenges, and daily quotes) and additional icons used in Positive Advice (e.g., Listen and Stop).
 
-navigation/  
-BottomTabNavigator.js: Handles bottom tab navigation for switching between the app's main screens.
+navigation/ 
+Defines the structure for navigating between app screens, including bottom tab navigation.
+- BottomTabNavigator.js: Handles bottom tab navigation for switching between the app's main screens.
 
 screens/  
 Contains the app's core UI components, including:
@@ -53,7 +54,8 @@ Contains the app's core UI components, including:
 - PositiveAdvice.js: Provides users with personalized positive advice based on their input.
 
 services/  
-notifications.js: Manages app notifications, including reminders and motivational updates.
+Handles app functionality like notifications.
+- notifications.js: Manages app notifications, including reminders and motivational updates.
 
 App.js: The main entry point for the app that initializes and renders the primary components.
 
