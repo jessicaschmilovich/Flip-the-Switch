@@ -65,6 +65,6 @@ babel.config.js: Configuration file for Babel, used for transpiling JavaScript.
 
 eas.json: Expo Application Services configuration file for builds and deployment.
 
-package.json: Specifies project dependencies and npm scripts.
-
 package-lock.json: Locks dependency versions for consistent builds.
+
+package.json: Specifies project dependencies and npm scripts.
