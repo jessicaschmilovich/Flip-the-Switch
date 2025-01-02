@@ -1,6 +1,6 @@
 # Flip the Switch
 
-Flip the Switch is a mental wellness app I developed that shares daily motivational quotes, provides AI-powered advice to reframe negative thoughts, tracks moods daily, and offers specific mood challenges using AI to uplift the user's mood. Users also receive weekly notifications with mood trends and insight to support their mental health. I used JavaScript for functionality, React Native for the user interface, and Expo Go for testing and deployment across devices. I won the 2024 Congressional App Challenge with this application.
+Flip the Switch is a cross-platform mental wellness app I developed that shares daily motivational quotes, provides AI-powered advice to reframe negative thoughts, tracks moods daily, and offers specific mood challenges using AI to uplift the user's mood. Users also receive weekly notifications with mood trends and insights to support their mental health. I used JavaScript for functionality, React Native for the user interface, and Expo Go for testing and deployment across devices. I won the 2024 Congressional App Challenge with this application.
 
 **Features:**
 1. Daily Quotes
