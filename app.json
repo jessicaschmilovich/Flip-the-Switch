@@ -1,23 +1,27 @@
 {
   "expo": {
-    "name": "FlipTheSwitch",
+    "name": "",
     "slug": "FlipTheSwitch",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Flip_the_Switch_splash.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/Flip_the_Switch_splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#7bbbef" 
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "statusBarHidden": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/Flip_the_Switch_splash.png",
         "backgroundColor": "#7bbbef"
+      },
+      "androidStatusBar": {
+        "hidden": true
       },
       "package": "com.fliptheswitch.app"
     },
